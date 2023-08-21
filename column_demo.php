@@ -217,7 +217,7 @@ function coldemo_word_filter_data_active( $wpquery ){
     }
 
     $flter_val = isset( $_GET['word_filter'] ) ? $_GET['word_filter'] : '';
-    if( $flter_val =='1' ){
+    if(  '1' == $flter_val ){
         $wpquery->set( 'meta_query', array(
 			array(
 				'key'     => 'wordn',
@@ -226,7 +226,8 @@ function coldemo_word_filter_data_active( $wpquery ){
 				'type'    => 'NUMERIC'
 			)
 		) );
-    } elseif( $flter_val =='2' ){
+    } 
+    else if( $flter_val =='2' ){
         $wpquery->set( 'meta_query', array(
 			array(
 				'key'     => 'wordn',
@@ -235,7 +236,7 @@ function coldemo_word_filter_data_active( $wpquery ){
 				'type'    => 'NUMERIC'
 			)
 		) );
-    }elseif( $flter_val  == '3'){
+    }else if( $flter_val  == '3'){
         $wpquery->set( 'meta_query', array(
 			array(
 				'key'     => 'wordn',
@@ -248,33 +249,3 @@ function coldemo_word_filter_data_active( $wpquery ){
     }
 }
 add_action( 'pre_get_posts','coldemo_word_filter_data_active' );
-
-function coldemo_wc_filter() {
-	if ( isset( $_GET['post_type'] ) && $_GET['post_type'] != 'post' ) { //display only on posts page
-		return;
-	}
-
-
-	$filter_value = isset( $_GET['WCFILTER'] ) ? $_GET['WCFILTER'] : '';
-	$values       = array(
-		'0' => __( 'Word Count', 'column_demo' ),
-		'1' => __( 'Above 400', 'column_demo' ),
-		'2' => __( '200 to 400', 'column_demo' ),
-		'3' => __( 'Below 200', 'column_demo' ),
-	);
-	?>
-    <select name="WCFILTER">
-		<?php
-		foreach ( $values as $key => $value ) {
-			printf( "<option value='%s' %s>%s</option>", $key,
-				$key == $filter_value ? "selected = 'selected'" : '',
-				$value
-			);
-		}
-		?>
-    </select>
-	<?php
-}
-
-add_action( 'restrict_manage_posts', 'coldemo_wc_filter' );
-
